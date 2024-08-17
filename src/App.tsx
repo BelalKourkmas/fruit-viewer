@@ -1,8 +1,6 @@
 import "./App.css";
 import { JarViewer } from "./components/JarViewer";
 import { FruitViewer } from "./components/FruitViewer";
-import { useState, useEffect } from "react";
-import { Fruit } from "./types/fruitTypes";
 import FruitsProvider from "./context/FruitsContext";
 
 function App() {

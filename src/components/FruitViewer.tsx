@@ -2,9 +2,13 @@ import { Dropdown } from "./Dropdown";
 import { CollapsibleHeader } from "./CollapsibleHeader";
 import { Fruit } from "../types/fruitTypes";
 import { useFruitsContext } from "../context/FruitsContext";
+import { useState } from "react";
+import { Table } from "./Table";
+import { SortableTable } from "./SortableTable";
 
 const FruitViewer = () => {
     const { fruits } = useFruitsContext();
+    const [groupBy, setGroupBy] = useState("None");
     console.log(fruits);
 
     const getUniqueCategories = <Item,>(
@@ -25,32 +29,49 @@ const FruitViewer = () => {
         {
             label: "None",
             onClick: () => {
-                console.log("group by none");
+                setGroupBy("None");
             },
         },
         {
             label: "Family",
             onClick: () => {
-                console.log("group by family");
+                setGroupBy("Family");
             },
         },
         {
             label: "Order",
             onClick: () => {
-                console.log("group by order");
+                setGroupBy("Order");
             },
         },
         {
             label: "Genus",
             onClick: () => {
-                console.log("group by genus");
+                setGroupBy("Genus");
             },
         },
     ];
+
+    const config = [
+        {
+            label: "Name",
+            render: (fruit: Fruit) => fruit.name,
+            sortValue: (fruit: Fruit) => fruit.name,
+        },
+        {
+            label: "Calories",
+            render: (fruit: Fruit) => fruit.nutritions.calories,
+            sortValue: (fruit: Fruit) => fruit.nutritions.calories,
+        },
+    ];
+
+    const keyFn = (fruit: Fruit) => {
+        return fruit.name;
+    };
     return (
         <div>
             <Dropdown label={"Group By:"} options={groupByOptions} />
-            <CollapsibleHeader />
+            <SortableTable data={fruits} config={config} keyFn={keyFn} />
         </div>
     );
 };

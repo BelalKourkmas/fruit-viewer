@@ -30,6 +30,7 @@ const FruitsProvider = ({ children }: { children: React.ReactNode }) => {
                 }
 
                 const data: Fruit[] = await response.json();
+                console.log(data);
                 return data;
             } catch (error) {
                 console.error("Error fetching all fruits:", error);
