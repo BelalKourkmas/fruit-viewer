@@ -18,7 +18,7 @@ const Dropdown = ({ label, options }: DropdownProps) => {
     };
 
     const renderedOptions = options.map((option: Option) => {
-        if (currentSelection != option.label) {
+        if (currentSelection !== option.label) {
             return (
                 <div key={option.label} onClick={() => handleClick(option)}>
                     {option.label}
@@ -29,6 +29,7 @@ const Dropdown = ({ label, options }: DropdownProps) => {
 
     const handleClick = (option: Option) => {
         setCurrentSelection(option.label);
+        option.onClick();
         setIsOpen(false);
     };
 

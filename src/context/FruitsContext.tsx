@@ -5,12 +5,18 @@ interface FruitsContextType {
     fruits: Fruit[];
     loading: boolean;
     error: string | null;
+    selectedFruits: Fruit[];
+    handleAddFruit: (fruit: Fruit) => void;
+    handleAddFruits: (fruit: Fruit[]) => void;
 }
 
 const FruitsContext = createContext<FruitsContextType>({
     fruits: [],
     loading: true,
     error: null,
+    selectedFruits: [],
+    handleAddFruit: () => {},
+    handleAddFruits: () => {},
 });
 
 export const useFruitsContext = () => useContext(FruitsContext);
@@ -56,8 +62,21 @@ const FruitsProvider = ({ children }: { children: React.ReactNode }) => {
 
         fetchData();
     }, []);
-
-    const value: FruitsContextType = { fruits, loading, error };
+    const [selectedFruits, setSelectedFruits] = useState<Fruit[]>([]);
+    const handleAddFruit = (fruit: Fruit) => {
+        setSelectedFruits([...selectedFruits, fruit]);
+    };
+    const handleAddFruits = (fruits: Fruit[]) => {
+        setSelectedFruits([...selectedFruits, ...fruits]);
+    };
+    const value: FruitsContextType = {
+        fruits,
+        loading,
+        error,
+        selectedFruits,
+        handleAddFruit,
+        handleAddFruits,
+    };
 
     return (
         <FruitsContext.Provider value={value}>
