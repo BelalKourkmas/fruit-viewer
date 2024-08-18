@@ -1,13 +1,14 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { Fruit } from "../types/fruitTypes";
+import { Fruit, ModifiedFruit } from "../types/fruitTypes";
 
 interface FruitsContextType {
     fruits: Fruit[];
     loading: boolean;
     error: string | null;
-    selectedFruits: Fruit[];
+    selectedFruits: ModifiedFruit[];
     handleAddFruit: (fruit: Fruit) => void;
     handleAddFruits: (fruit: Fruit[]) => void;
+    handleRemoveFruit: (index: number) => void;
 }
 
 const FruitsContext = createContext<FruitsContextType>({
@@ -17,6 +18,7 @@ const FruitsContext = createContext<FruitsContextType>({
     selectedFruits: [],
     handleAddFruit: () => {},
     handleAddFruits: () => {},
+    handleRemoveFruit: () => {},
 });
 
 export const useFruitsContext = () => useContext(FruitsContext);
@@ -25,6 +27,7 @@ const FruitsProvider = ({ children }: { children: React.ReactNode }) => {
     const [fruits, setFruits] = useState<Fruit[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [counter, setCounter] = useState(0);
 
     useEffect(() => {
         const fetchAllFruits = async (): Promise<Fruit[]> => {
@@ -53,7 +56,7 @@ const FruitsProvider = ({ children }: { children: React.ReactNode }) => {
                 if (error instanceof Error) {
                     setError(error.message);
                 } else {
-                    setError("An unknown error has occured");
+                    setError("An unknown error has occurred");
                 }
             } finally {
                 setLoading(false);
@@ -62,13 +65,39 @@ const FruitsProvider = ({ children }: { children: React.ReactNode }) => {
 
         fetchData();
     }, []);
-    const [selectedFruits, setSelectedFruits] = useState<Fruit[]>([]);
+
+    const [selectedFruits, setSelectedFruits] = useState<ModifiedFruit[]>([]);
+
     const handleAddFruit = (fruit: Fruit) => {
-        setSelectedFruits([...selectedFruits, fruit]);
+        setCounter((prevCounter) => {
+            const newFruit: ModifiedFruit = {
+                index: prevCounter + 1,
+                ...fruit,
+            };
+            setSelectedFruits((prevFruits) => [...prevFruits, newFruit]);
+            return prevCounter + 1;
+        });
     };
+
     const handleAddFruits = (fruits: Fruit[]) => {
-        setSelectedFruits([...selectedFruits, ...fruits]);
+        setCounter((prevCounter) => {
+            const newFruits: ModifiedFruit[] = fruits.map((fruit, index) => {
+                // Use index to differentiate fruits in this batch
+                const newIndex = prevCounter + index + 1;
+                return { index: newIndex, ...fruit };
+            });
+
+            setSelectedFruits((prevFruits) => [...prevFruits, ...newFruits]);
+            return prevCounter + fruits.length;
+        });
     };
+
+    const handleRemoveFruit = (index: number) => {
+        setSelectedFruits((prevFruits) =>
+            prevFruits.filter((fruit) => fruit.index !== index)
+        );
+    };
+
     const value: FruitsContextType = {
         fruits,
         loading,
@@ -76,6 +105,7 @@ const FruitsProvider = ({ children }: { children: React.ReactNode }) => {
         selectedFruits,
         handleAddFruit,
         handleAddFruits,
+        handleRemoveFruit,
     };
 
     return (

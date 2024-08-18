@@ -14,3 +14,13 @@ export interface Fruit {
     order: string;
     nutritions: Nutritions;
 }
+
+export interface ModifiedFruit {
+    index: number;
+    genus: string;
+    name: string;
+    id: number;
+    family: string;
+    order: string;
+    nutritions: Nutritions;
+}
