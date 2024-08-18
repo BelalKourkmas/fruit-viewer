@@ -1,6 +1,6 @@
 import { Dropdown } from "./Dropdown";
 import { useFruitsContext } from "../context/FruitsContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SortableTable } from "./SortableTable";
 import { CollapsibleHeader } from "./CollapsibleHeader";
 import { useSortableFruit } from "../hooks/useSortableFruit";
@@ -8,9 +8,6 @@ import { useSortableFruit } from "../hooks/useSortableFruit";
 const FruitViewer = () => {
     const { fruits } = useFruitsContext();
     const [groupBy, setGroupBy] = useState("None");
-    useEffect(() => {
-        console.log("groupBy changed to:", groupBy);
-    }, [groupBy]);
 
     const getUniqueCategories = <Item,>(
         items: Item[],
@@ -21,7 +18,6 @@ const FruitViewer = () => {
         );
         return Array.from(uniques);
     };
-
     const uniqueGenus = getUniqueCategories(fruits, "genus");
     const uniqueFamily = getUniqueCategories(fruits, "family");
     const uniqueOrder = getUniqueCategories(fruits, "order");

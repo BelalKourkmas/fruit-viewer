@@ -1,9 +1,10 @@
 import { SortableTable } from "./SortableTable";
 import { useFruitsContext } from "../context/FruitsContext";
 import { Fruit } from "../types/fruitTypes";
-import { Accordion } from "./Accordion";
+import { AccordionWithButton } from "./AccordionWithButton";
 import { useSortableFruit } from "../hooks/useSortableFruit";
 
+// Considered refactoring to be generic, but it wasn't being reused.
 interface CollapsibleHeaderProps {
     headerLabels: string[];
     groupBy: string;
@@ -45,8 +46,8 @@ const CollapsibleHeader = ({
         return <div onClick={() => handleAddGroup(label)}>Add</div>;
     };
 
-    const renderedAccordions = headerLabels.map((label) => (
-        <Accordion
+    const renderedAccordionWithButtons = headerLabels.map((label) => (
+        <AccordionWithButton
             key={label}
             title={label}
             content={handleClick(label)}
@@ -54,7 +55,7 @@ const CollapsibleHeader = ({
         />
     ));
 
-    return <div>{renderedAccordions}</div>;
+    return <div>{renderedAccordionWithButtons}</div>;
 };
 
 export { CollapsibleHeader };

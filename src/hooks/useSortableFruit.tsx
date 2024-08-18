@@ -1,6 +1,7 @@
 import { useFruitsContext } from "../context/FruitsContext";
 import { Fruit } from "../types/fruitTypes";
 
+// hook to reduce reused code
 const useSortableFruit = () => {
     const { handleAddFruit } = useFruitsContext();
 

@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { IoIosArrowDropleft, IoIosArrowDropdown } from "react-icons/io";
 
-interface AccordionProps {
+interface AccordionWithButtonProps {
     title: string;
     content: React.ReactNode;
     button: React.ReactNode;
 }
 
-const Accordion = ({ title, content, button }: AccordionProps) => {
+const AccordionWithButton = ({
+    title,
+    content,
+    button,
+}: AccordionWithButtonProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggleOpen = () => {
         setIsOpen(!isOpen);
@@ -32,4 +36,4 @@ const Accordion = ({ title, content, button }: AccordionProps) => {
     );
 };
 
-export { Accordion };
+export { AccordionWithButton };

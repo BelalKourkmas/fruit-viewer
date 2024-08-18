@@ -1,6 +1,5 @@
 import { Fragment } from "react";
 
-// Define types for the column configuration and props
 interface ColumnConfig<T> {
     label: string;
     render: (data: T) => React.ReactNode;
@@ -17,6 +16,7 @@ interface TableProps<T> {
 const Table = <T,>({ data, config, keyFn }: TableProps<T>) => {
     const renderedHeaders = config.map((column, index) => {
         if (column.header) {
+            // using a fragment to keep table consistency
             return <Fragment key={index}>{column.header()}</Fragment>;
         }
         return (

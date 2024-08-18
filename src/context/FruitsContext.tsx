@@ -31,7 +31,10 @@ const FruitsProvider = ({ children }: { children: React.ReactNode }) => {
     const [error, setError] = useState<string | null>(null);
     const [counter, setCounter] = useState(0);
     const [calories, setCalories] = useState(0);
+    const [selectedFruits, setSelectedFruits] = useState<ModifiedFruit[]>([]);
 
+    // Instead of making multiple API calls, I use one and process it.
+    // Considered saving response to a cookie.
     useEffect(() => {
         const fetchAllFruits = async (): Promise<Fruit[]> => {
             try {
@@ -69,10 +72,10 @@ const FruitsProvider = ({ children }: { children: React.ReactNode }) => {
         fetchData();
     }, []);
 
-    const [selectedFruits, setSelectedFruits] = useState<ModifiedFruit[]>([]);
-
+    // Modified fruit contains a key that can be used in Jar.
     const handleAddFruit = (fruit: Fruit) => {
         setCalories(calories + fruit.nutritions.calories);
+        // prevent useState bugs with functional updates
         setCounter((prevCounter) => {
             const newFruit: ModifiedFruit = {
                 index: prevCounter + 1,
