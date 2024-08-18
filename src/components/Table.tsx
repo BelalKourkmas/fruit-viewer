@@ -28,7 +28,11 @@ const Table = <T,>({ data, config, keyFn }: TableProps<T>) => {
 
     const renderedRows = data.map((rowData) => {
         const renderedCells = config.map((column, index) => {
-            return <td key={index}>{column.render(rowData)}</td>;
+            return (
+                <td className="p-1 pr-4" key={index}>
+                    {column.render(rowData)}
+                </td>
+            );
         });
         return (
             <tr className="border-b" key={keyFn(rowData)}>

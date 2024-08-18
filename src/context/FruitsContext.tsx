@@ -6,9 +6,10 @@ interface FruitsContextType {
     loading: boolean;
     error: string | null;
     selectedFruits: ModifiedFruit[];
+    calories: number;
     handleAddFruit: (fruit: Fruit) => void;
     handleAddFruits: (fruit: Fruit[]) => void;
-    handleRemoveFruit: (index: number) => void;
+    handleRemoveFruit: (fruit: ModifiedFruit) => void;
 }
 
 const FruitsContext = createContext<FruitsContextType>({
@@ -16,6 +17,7 @@ const FruitsContext = createContext<FruitsContextType>({
     loading: true,
     error: null,
     selectedFruits: [],
+    calories: 0,
     handleAddFruit: () => {},
     handleAddFruits: () => {},
     handleRemoveFruit: () => {},
@@ -28,6 +30,7 @@ const FruitsProvider = ({ children }: { children: React.ReactNode }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [counter, setCounter] = useState(0);
+    const [calories, setCalories] = useState(0);
 
     useEffect(() => {
         const fetchAllFruits = async (): Promise<Fruit[]> => {
@@ -69,6 +72,7 @@ const FruitsProvider = ({ children }: { children: React.ReactNode }) => {
     const [selectedFruits, setSelectedFruits] = useState<ModifiedFruit[]>([]);
 
     const handleAddFruit = (fruit: Fruit) => {
+        setCalories(calories + fruit.nutritions.calories);
         setCounter((prevCounter) => {
             const newFruit: ModifiedFruit = {
                 index: prevCounter + 1,
@@ -82,7 +86,9 @@ const FruitsProvider = ({ children }: { children: React.ReactNode }) => {
     const handleAddFruits = (fruits: Fruit[]) => {
         setCounter((prevCounter) => {
             const newFruits: ModifiedFruit[] = fruits.map((fruit, index) => {
-                // Use index to differentiate fruits in this batch
+                setCalories((prevCalories) => {
+                    return fruit.nutritions.calories + prevCalories;
+                });
                 const newIndex = prevCounter + index + 1;
                 return { index: newIndex, ...fruit };
             });
@@ -92,9 +98,12 @@ const FruitsProvider = ({ children }: { children: React.ReactNode }) => {
         });
     };
 
-    const handleRemoveFruit = (index: number) => {
+    const handleRemoveFruit = (modifiedFruit: ModifiedFruit) => {
+        setCalories((prevCalories) => {
+            return prevCalories - modifiedFruit.nutritions.calories;
+        });
         setSelectedFruits((prevFruits) =>
-            prevFruits.filter((fruit) => fruit.index !== index)
+            prevFruits.filter((fruit) => fruit.index !== modifiedFruit.index)
         );
     };
 
@@ -103,6 +112,7 @@ const FruitsProvider = ({ children }: { children: React.ReactNode }) => {
         loading,
         error,
         selectedFruits,
+        calories,
         handleAddFruit,
         handleAddFruits,
         handleRemoveFruit,

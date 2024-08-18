@@ -3,11 +3,13 @@ import { useFruitsContext } from "../context/FruitsContext";
 import { ModifiedFruit } from "../types/fruitTypes";
 
 const JarViewer = () => {
+    const { selectedFruits, handleRemoveFruit, calories } = useFruitsContext();
+
     const removeButton = (fruit: ModifiedFruit) => {
         return (
             <div
-                onClick={() => handleRemoveFruit(fruit.index)}
-                className="inline-block border border-gray-500 px-2 py-1 m-1 cursor-pointer"
+                onClick={() => handleRemoveFruit(fruit)}
+                className="inline-block border border-gray-500 px-2 py-1 m-1 cursor-pointer hover:bg-red-700"
             >
                 Remove
             </div>
@@ -29,7 +31,6 @@ const JarViewer = () => {
             render: (fruit: ModifiedFruit) => removeButton(fruit),
         },
     ];
-    const { selectedFruits, handleRemoveFruit } = useFruitsContext();
 
     const keyFn = (fruit: ModifiedFruit) => {
         return fruit.index;
@@ -37,7 +38,7 @@ const JarViewer = () => {
 
     return (
         <div>
-            Jar
+            <div className="text-3xl">Jar: {calories} Calories</div>
             <SortableTable
                 data={selectedFruits}
                 config={config}

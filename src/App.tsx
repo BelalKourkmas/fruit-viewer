@@ -7,7 +7,7 @@ function App() {
     // To reduce API calls, grab the fruits once and process with JS to get groups
 
     return (
-        <div className="flex">
+        <div className="flex justify-between select-none">
             <FruitsProvider>
                 <FruitViewer />
                 <JarViewer />

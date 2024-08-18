@@ -12,7 +12,7 @@ const useSortableFruit = () => {
         return (
             <div
                 onClick={() => handleAddClick(fruit)}
-                className="inline-block border border-gray-500 px-2 py-1 m-1 cursor-pointer"
+                className="inline-block border border-gray-500 px-2 py-1 m-1 cursor-pointer hover:bg-green-700"
             >
                 Add
             </div>
