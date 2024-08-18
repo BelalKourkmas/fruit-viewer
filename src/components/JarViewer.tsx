@@ -1,4 +1,3 @@
-import { useSortableFruit } from "../hooks/useSortableFruit";
 import { SortableTable } from "./SortableTable";
 import { useFruitsContext } from "../context/FruitsContext";
 import { ModifiedFruit } from "../types/fruitTypes";
@@ -33,12 +32,18 @@ const JarViewer = () => {
     const { selectedFruits, handleRemoveFruit } = useFruitsContext();
 
     const keyFn = (fruit: ModifiedFruit) => {
-        // Generate a unique key using the fruit's ID and its position in the array
-        return fruit.index.toString();
+        return fruit.index;
     };
 
     return (
-        <SortableTable data={selectedFruits} config={config} keyFn={keyFn} />
+        <div>
+            Jar
+            <SortableTable
+                data={selectedFruits}
+                config={config}
+                keyFn={keyFn}
+            />
+        </div>
     );
 };
 

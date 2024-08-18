@@ -11,7 +11,7 @@ interface ColumnConfig<T> {
 interface TableProps<T> {
     data: T[];
     config: ColumnConfig<T>[];
-    keyFn: (data: T) => string;
+    keyFn: (data: T) => string | number;
 }
 
 const Table = <T,>({ data, config, keyFn }: TableProps<T>) => {

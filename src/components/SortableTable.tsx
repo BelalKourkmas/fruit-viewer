@@ -13,7 +13,7 @@ interface SortableColumnConfig<T> {
 interface SortableTableProps<T> {
     data: T[];
     config: SortableColumnConfig<T>[];
-    keyFn: (data: T) => string;
+    keyFn: (data: T) => string | number;
 }
 
 const SortableTable = <T,>({ config, data, keyFn }: SortableTableProps<T>) => {
