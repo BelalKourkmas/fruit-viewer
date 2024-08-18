@@ -10,8 +10,8 @@ function App() {
         <div className="flex">
             <FruitsProvider>
                 <FruitViewer />
+                <JarViewer />
             </FruitsProvider>
-            <JarViewer />
         </div>
     );
 }
