@@ -54,11 +54,7 @@ const CollapsibleHeader = ({
         />
     ));
 
-    return (
-        <table>
-            <tbody>{renderedAccordions}</tbody>
-        </table>
-    );
+    return <div>{renderedAccordions}</div>;
 };
 
 export { CollapsibleHeader };

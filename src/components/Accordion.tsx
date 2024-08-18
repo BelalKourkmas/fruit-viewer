@@ -13,13 +13,17 @@ const Accordion = ({ title, content, button }: AccordionProps) => {
     };
 
     return (
-        <tr>
-            <td onClick={toggleOpen} className="cursor-pointer">
-                {title}
-            </td>
-            <td className="ml-2 cursor-pointer">{button}</td>
+        <div className="">
+            <div className="flex items-center">
+                <div className="inline-block border border-gray-500 px-2 py-1 m-1 cursor-pointer">
+                    {button}
+                </div>
+                <div onClick={toggleOpen} className="cursor-pointer">
+                    {title}
+                </div>
+            </div>
             {isOpen && content}
-        </tr>
+        </div>
     );
 };
 
