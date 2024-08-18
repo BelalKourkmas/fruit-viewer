@@ -16,7 +16,9 @@ open up a terminal
 
 ## Preview
 
-![preview](src/images/preview.png)
+![preview](src/images/preview.gif)
+
+![screenshot](src/images/preview.png)
 
 ## Initial Sketch
 
