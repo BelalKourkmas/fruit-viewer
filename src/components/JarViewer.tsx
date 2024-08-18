@@ -38,7 +38,9 @@ const JarViewer = () => {
 
     return (
         <div>
-            <div className="text-3xl">Jar: {calories} Calories</div>
+            <div className="text-3xl text-center p-3">
+                Jar: {calories} Calories
+            </div>
             <SortableTable
                 data={selectedFruits}
                 config={config}

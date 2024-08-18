@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { IoIosArrowDropleft, IoIosArrowDropdown } from "react-icons/io";
 
 interface DropdownProps {
     label: string;
@@ -38,7 +39,10 @@ const Dropdown = ({ label, options }: DropdownProps) => {
             onClick={() => toggleOpen()}
             className="inline-block border border-gray-500 px-2 py-1 cursor-pointer"
         >
-            {label} {currentSelection}
+            <div className="flex items-center">
+                {label} {currentSelection}{" "}
+                {isOpen ? <IoIosArrowDropdown /> : <IoIosArrowDropleft />}
+            </div>
             {isOpen && renderedOptions}
         </div>
     );

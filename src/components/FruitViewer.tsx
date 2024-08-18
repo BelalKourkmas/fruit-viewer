@@ -72,7 +72,9 @@ const FruitViewer = () => {
 
     return (
         <div>
-            <Dropdown label={"Group By:"} options={groupByOptions} />
+            <div className="text-2xl p-3">
+                <Dropdown label={"Group By:"} options={groupByOptions} />
+            </div>
             {groupBy === "None" ? groupNoneLayout : null}
             {groupBy === "Genus" ? groupGenusLayout : null}
             {groupBy === "Family" ? groupFamilyLayout : null}
